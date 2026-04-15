@@ -1,0 +1,387 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">إدارة التذاكر</h5>
+                <div>
+                    <button class="btn btn-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#ticketModal">
+                        <i class="fas fa-plus"></i> إضافة تذكرة جديدة
+                    </button>
+                    <a href="/admin/backup" class="btn btn-success btn-sm">
+                        <i class="fas fa-download me-2"></i>تحميل البيانات
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr class="text-center">
+                                <th style="width: 5%; min-width: 50px;">#</th>
+                                <th style="min-width: 120px;">
+                                    <i class="fas fa-building me-2"></i>اسم الشركة
+                                </th>
+                                <th style="min-width: 150px;">
+                                    <i class="fas fa-city me-2"></i>المدينة
+                                </th>
+                                <th style="min-width: 150px;">
+                                    <i class="fas fa-map-marker-alt me-2"></i>الوجهة
+                                </th>
+                                <th style="width: 15%; min-width: 120px;">
+                                    <i class="fas fa-tag me-2"></i>السعر
+                                </th>
+                                <th style="width: 15%; min-width: 120px;">
+                                    <i class="fas fa-cog me-2"></i>الإجراءات
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {{#each tickets}}
+                            <tr>
+                                <td class="text-center fw-bold">{{add @index 1}}</td>
+                                <td>
+                                    <div class="d-flex align-items-center" id="arlinenamew">
+                                        <span class="arlinenamew"> {{arlinename}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-medium">{{namecity}}</span>
+                                        <small class="text-muted">{{citycodename}}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-medium">{{direction}}</span>
+                                        <small class="text-muted">{{directioncode}}</small>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-success bg-opacity-10 text-success">{{pricego}} - {{priceback}}</span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-sm btn-icon btn-outline-primary edit-ticket" data-id="{{@index}}" data-ticket='{{json this}}'
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="تعديل">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-icon btn-outline-danger delete-ticket" data-id="{{@index}}"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="حذف">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                      
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <div class="text-center">
+                                        <span class="text-muted small">
+                                            إجمالي التذاكر: <span class="fw-bold">{{tickets.length}}</span>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Table Transformation Script -->
+<script>
+// Convert table to mobile cards on page load and resize
+function convertTableToMobileCards() {
+    if (window.innerWidth <= 991.98) {
+        const table = document.querySelector('.table');
+        const tableResponsive = document.querySelector('.table-responsive');
+        
+        if (table && tableResponsive && !tableResponsive.querySelector('.mobile-ticket-cards')) {
+            const rows = table.querySelectorAll('tbody tr');
+            const footerRow = table.querySelector('tfoot tr');
+            
+            let mobileHTML = '<div class="mobile-ticket-cards">';
+            
+            rows.forEach((row, index) => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 6) {
+                    const ticketNumber = cells[0].textContent.trim();
+                    const company = cells[1].querySelector('.arlinenamew')?.textContent.trim() || '';
+                    const city = cells[2].querySelector('.fw-medium')?.textContent.trim() || '';
+                    const cityCode = cells[2].querySelector('.text-muted')?.textContent.trim() || '';
+                    const destination = cells[3].querySelector('.fw-medium')?.textContent.trim() || '';
+                    const destCode = cells[3].querySelector('.text-muted')?.textContent.trim() || '';
+                    const price = cells[4].querySelector('.badge')?.textContent.trim() || '';
+                    const actions = cells[5].innerHTML;
+                    
+                    mobileHTML += `
+                        <div class="mobile-ticket-card">
+                            <div class="mobile-card-header">
+                                <div class="mobile-card-number">${ticketNumber}</div>
+                                <div class="mobile-card-company">
+                                    <span class="arlinenamew">${company}</span>
+                                </div>
+                            </div>
+                            <div class="mobile-card-body">
+                                <div class="mobile-card-row">
+                                    <div class="mobile-card-label">
+                                        <i class="fas fa-city"></i> المدينة
+                                    </div>
+                                    <div class="mobile-card-value">
+                                        <div>${city}</div>
+                                        <small>${cityCode}</small>
+                                    </div>
+                                </div>
+                                <div class="mobile-card-row">
+                                    <div class="mobile-card-label">
+                                        <i class="fas fa-map-marker-alt"></i> الوجهة
+                                    </div>
+                                    <div class="mobile-card-value">
+                                        <div>${destination}</div>
+                                        <small>${destCode}</small>
+                                    </div>
+                                </div>
+                                <div class="mobile-card-row">
+                                    <div class="mobile-card-label">
+                                        <i class="fas fa-tag"></i> السعر
+                                    </div>
+                                    <div class="mobile-card-value">
+                                        <span class="mobile-price-badge">${price}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-card-actions">
+                                ${actions}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            // Add summary footer
+            if (footerRow) {
+                const summaryText = footerRow.querySelector('td')?.textContent.trim() || '';
+                mobileHTML += `
+                    <div class="mobile-summary">
+                        <p class="mobile-summary-text">${summaryText}</p>
+                    </div>
+                `;
+            }
+            
+            mobileHTML += '</div>';
+            
+            // Insert mobile cards after the table
+            table.insertAdjacentHTML('afterend', mobileHTML);
+        }
+    } else {
+        // Remove mobile cards on desktop
+        const mobileCards = document.querySelector('.mobile-ticket-cards');
+        if (mobileCards) {
+            mobileCards.remove();
+        }
+    }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', function() {
+    convertTableToMobileCards();
+    
+    // Re-run on window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(convertTableToMobileCards, 250);
+    });
+});
+</script>
+
+<!-- Add/Edit Ticket Modal -->
+<div class="modal fade" id="ticketModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalTitle">إضافة تذكرة جديدة</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="ticketForm">
+                <div class="modal-body">
+                    <input type="hidden" id="ticketId" name="id">
+                    
+                    <!-- معلومات الرحلة الأساسية -->
+                    <div class="card mb-4 border-0 shadow-sm">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>معلومات الرحلة الأساسية</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="arlinename" class="form-label">اسم شركة الطيران</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-plane"></i></span>
+                                            <input type="text" class="form-control" id="arlinename" name="arlinename" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="daraga" class="form-label">درجة السفر</label>
+                                        <select class="form-select" id="daraga" name="daraga" required>
+                                            <option value="">اختر الدرجة</option>
+                                            <option value="الدرجة اللإقتصادية">الدرجة الإقتصادية</option>
+                                            <option value="درجة رجال الأعمال">درجة رجال الأعمال</option>
+                                            <option value="الدرجة الأولى">الدرجة الأولى</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="daysfly" class="form-label">أيام الطيران</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                            <input type="text" class="form-control" id="daysfly" name="daysfly" placeholder="مثال: السبت، الأحد، الإثنين" required>
+                                        </div>
+                                        <small class="form-text text-muted">افصل بين الأيام بفاصلة</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- معلومات المدينة والوجهة -->
+                    <div class="card mb-4 border-0 shadow-sm">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>معلومات المدينة والوجهة</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="namecity" class="form-label">اسم المدينة</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                            <input type="text" class="form-control" id="namecity" name="namecity" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="citycodename" class="form-label">رمز المدينة (IATA)</label>
+                                        <input type="text" class="form-control text-uppercase" id="citycodename" name="citycodename" maxlength="3" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="direction" class="form-label">الوجهة</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                                            <input type="text" class="form-control" id="direction" name="direction" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="directioncode" class="form-label">رمز الوجهة (IATA)</label>
+                                        <input type="text" class="form-control text-uppercase" id="directioncode" name="directioncode" maxlength="3" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- الأسعار -->
+                    <div class="card mb-4 border-0 shadow-sm">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-tags me-2"></i>تفاصيل الأسعار</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pricego" class="form-label">سعر الذهاب (دولار)</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control text-start" id="pricego" name="pricego" min="0" step="0.01" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="priceback" class="form-label">سعر الذهاب و العودة (دولار)</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control text-start" id="priceback" name="priceback" min="0" step="0.01">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- المرفقات -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="fas fa-paperclip me-2"></i>المرفقات</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="logoUpload" class="form-label">
+                                            <i class="fas fa-image me-2"></i>شعار شركة الطيران
+                                        </label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" class="form-control" id="logoUpload" name="logo" accept="image/*">
+                                            <input type="hidden" id="logo" name="logo">
+                                            <div class="form-text small">الحد الأقصى للحجم: 2 ميجابايت، الصيغ المقبولة: JPG, PNG, WebP</div>
+                                            <div id="logoPreview" class="mt-2 text-center"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="imgUpload" class="form-label">
+                                            <i class="fas fa-image me-2"></i>صورة الوجهة
+                                        </label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" class="form-control" id="imgUpload" name="image" accept="image/*">
+                                            <input type="hidden" id="img" name="img">
+                                            <div class="form-text small">الحد الأقصى للحجم: 2 ميجابايت، الصيغ المقبولة: JPG, PNG, WebP</div>
+                                            <div id="imgPreview" class="mt-2 text-center"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i> إلغاء
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i> حفظ التغييرات
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تأكيد الحذف</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                هل أنت متأكد من حذف هذه التذكرة؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">حذف</button>
+            </div>
+        </div>
+    </div>
+</div>

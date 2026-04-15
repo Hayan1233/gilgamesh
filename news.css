@@ -1,0 +1,679 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+
+* {
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+  font-family: "El Messiri", "Cairo", sans-serif;
+
+}
+
+
+
+body {
+
+  overflow-x: hidden;
+
+  width: 100vw;
+
+  min-height: 100vh;
+
+  background: url('img.webp') center center/cover no-repeat fixed;
+
+  position: relative;
+
+  direction: rtl;
+
+  font-family: "El Messiri", "Cairo", sans-serif;
+
+  color: #fff;
+
+}
+
+
+
+body::before {
+
+  content: "";
+
+  position: fixed;
+
+  top: 0; left: 0; right: 0; bottom: 0;
+
+  z-index: 0;
+
+  background: linear-gradient(120deg, #181818bb 0%, #232323cc 80%, #00000099 100%);
+
+  pointer-events: none;
+
+}
+
+
+
+
+
+::-webkit-scrollbar {
+
+  width: 8px;
+
+  background: #002e6e;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+  background: #0057b8;
+
+  border-radius: 8px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === HERO SECTION - DESIGN PROFESSIONNEL ET ÉLÉGANT === */
+
+
+
+/* === BUTTONS - DESIGN PROFESSIONNEL ET LUXE === */
+
+
+
+/* === HERO STATS - DESIGN PROFESSIONNEL ET ÉLÉGANT === */
+
+
+
+/* === CAROUSEL === */
+
+
+
+/* Remove all active/inactive slide effects - all slides always active */
+
+
+
+/* Remove any inactive slide styles - all slides are always active */
+
+
+
+/* Enhanced animations for carousel */
+
+
+
+/* Responsive Carousel */
+
+
+
+/* Accessibility improvements */
+
+
+
+/* Reduced motion support */
+
+
+
+/* === ABOUT PREVIEW - BEAUTIFUL GOLD DESIGN === */
+
+
+
+/* === CONTACT PREVIEW - BEAUTIFUL GOLD DESIGN === */
+
+
+
+/* === MOBILE RESPONSIVE - BEAUTIFUL GOLD DESIGN === */
+
+
+
+@media (max-width: 767px) {
+
+}
+
+
+
+/* Clear glow animation for premium ticket borders only */
+
+
+
+/* Booking Modal Styles */
+
+
+
+/* Responsive Modal */
+
+/* Mobile-specific scroll fixes */
+
+@media (max-width: 768px) {
+
+    html {
+
+        scroll-behavior: smooth;
+
+        scroll-padding-top: 80px; /* Offset for mobile */
+
+    }
+
+    
+
+    body {
+
+        scroll-behavior: smooth;
+
+    }
+
+    
+
+    /* Ensure smooth scrolling works on mobile */
+
+    
+
+    /* Fix mobile viewport issues */
+
+}
+
+
+
+/* Additional mobile scroll improvements */
+
+@media (max-width: 480px) {
+
+    html {
+
+        scroll-padding-top: 60px; /* Smaller offset for small mobile */
+
+    }
+
+}
+
+
+
+/* Responsive styles */
+
+
+
+/* ===== Enhanced Mobile Responsiveness ===== */
+
+@media (max-width: 768px) {
+
+  /* Base typography */
+
+  body {
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+  }
+
+
+
+  /* Hero section */
+
+
+
+  /* Stats section */
+
+
+
+  /* Carousel */
+
+
+
+  /* About section */
+
+
+
+  /* Contact section */
+
+
+
+  /* Buttons */
+
+
+
+  /* Adjust spacing */
+
+
+
+}
+
+
+
+/* Extra small devices (phones, 480px and down) */
+
+/* search */
+
+/* Search Bar Styles */
+
+
+
+/* Search Options Tabs */
+
+
+
+/* Search Input */
+
+
+
+/* Search Suggestions */
+
+
+
+/* Responsive Design for Search Bar */
+
+/* Search Container - Modern Design */
+
+
+
+/* Search Row */
+
+
+
+/* Search Group */
+
+
+
+/* Search Input Container */
+
+
+
+/* Search Icon */
+
+
+
+/* Search Input */
+
+
+
+/* Search Button */
+
+
+
+/* Search Hints */
+
+
+
+/* Suggestions Dropdown */
+
+
+
+/* Show suggestions when container is focused or when they have the show class */
+
+
+
+/* Clear Button */
+
+
+
+/* Responsive Design */
+
+
+
+/* Animation */
+
+
+
+/* Loading Animation */
+
+/* Services Section Styles */
+
+
+
+
+
+
+
+
+
+/* Responsive Styles */
+
+
+
+/* News Section */
+
+
+
+/* News List */
+
+
+
+
+/* News Item */
+
+.news-item {
+
+    background: #fff;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+
+
+.news-item:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+
+}
+
+
+
+/* News Header */
+
+.news-header {
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 15px 20px;
+
+    border-bottom: 1px solid #f0f2f5;
+
+}
+
+
+
+.news-avatar {
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid #f5f5f5;
+
+    margin-left: 15px;
+
+}
+
+
+
+.news-company {
+
+    font-family: 'Cairo', sans-serif;
+
+    font-weight: 700;
+
+    color: #1a3b6b;
+
+    font-size: 1.1rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+
+.news-company p {
+
+    margin: 0;
+
+    font-weight: 400;
+
+    color: #666;
+
+    font-size: 0.9rem;
+
+}
+
+
+
+/* News Content */
+
+.news-content {
+
+    padding: 0;
+
+}
+
+
+
+.news-image {
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    border-bottom: 1px solid #f0f2f5;
+
+}
+
+
+
+.news-content h1 {
+
+    color: #1a3b6b;
+
+    font-size: 1.4rem;
+
+    margin: 20px 20px 15px;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    text-align: right;
+
+}
+
+
+
+/* News Text with Read More */
+
+.news-text {
+
+    position: relative;
+
+    line-height: 1.7;
+
+    color: #444;
+
+    font-size: 1.05rem;
+
+    margin: 0 20px 20px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #f0f2f5;
+
+    text-align: right;
+
+}
+
+
+
+.news-text p {
+
+    margin: 0;
+
+    display: inline;
+
+}
+
+
+
+/* Responsive Design */
+
+
+
+
+/* Hide unused elements */
+
+
+/* Enhanced Mobile Ticket Design */
+
+
+.news-page {
+
+    max-width: 800px;
+
+    margin: 0 auto;
+
+    padding: 20px 15px;
+
+    direction: rtl;
+
+    font-family: 'Cairo', sans-serif;
+
+}
+
+@media (max-width: 768px) {
+
+    .news-page {
+
+        padding: 10px;
+
+    }
+
+    
+
+    .news-item {
+
+        border-radius: 8px;
+
+    }
+
+    
+
+    .news-content h1 {
+
+        font-size: 1.3rem;
+
+        margin: 15px 15px 12px;
+
+    }
+
+    
+
+    .news-text,
+
+    .news-content p {
+
+        font-size: 1rem;
+
+        margin: 0 15px 15px;
+
+    }
+
+    
+
+    .news-avatar {
+
+        width: 45px;
+
+        height: 45px;
+
+        margin-left: 12px;
+
+    }
+
+    
+
+    .news-company {
+
+        font-size: 1rem;
+
+    }
+
+    
+
+    .news-company p {
+
+        font-size: 0.85rem;
+
+    }
+
+}
+
+.page-header,
+
+.facebook-style-news,
+
+.post-image,
+
+.action-btn {
+
+    display: none !important;
+
+}
+
+
+.news-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 30px;
+
+}
+
+/* Ensure proper text display for news content */
+.news-text p {
+    line-height: 1.6 !important;
+    display: block !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    margin: 0 15px 15px !important;
+    padding: 0 !important;
+}
+
+/* Override inline styles for proper text display */
+.news-text p[style*="-webkit-line-clamp"] {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.news-text p[style*="line-clamp: unset"] {
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
+    max-height: none !important;
+    overflow: visible !important;
+}

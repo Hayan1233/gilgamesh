@@ -1,0 +1,312 @@
+<div class="row news-page">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">إدارة الأخبار</h5>
+                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#newsModal">
+                    <i class="fas fa-plus"></i> إضافة خبر جديد
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr class="text-center">
+                                <th style="width: 5%; min-width: 50px;">#</th>
+                                <th style="width: 15%; min-width: 100px;">
+                                    <i class="fas fa-image me-2"></i>الصورة
+                                </th>
+                                <th style="min-width: 200px;">
+                                    <i class="fas fa-heading me-2"></i>العنوان
+                                </th>
+                                <th style="min-width: 300px;">
+                                    <i class="fas fa-align-right me-2"></i>النص
+                                </th>
+                                <th style="width: 15%; min-width: 150px;">
+                                    <i class="fas fa-cog me-2"></i>الإجراءات
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {{#each news}}
+                            <tr>
+                                <td class="text-center fw-bold">{{add @index 1}}</td>
+                                <td class="text-center">
+                                    {{#if img}}
+                                    <div class="d-flex justify-content-center">
+                                        <div class="position-relative" style="width: 80px; height: 60px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                            <img src="/imgnews/{{img}}" alt="صورة الخبر" class="w-100 h-100" style="object-fit: cover;">
+                                            <span class="position-absolute top-0 end-0 m-1">
+                                                <span class="badge bg-primary rounded-circle p-1">
+                                                    <i class="fas fa-image fa-xs"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {{else}}
+                                    <div class="text-center py-3 bg-light rounded">
+                                        <i class="far fa-image fa-2x text-muted mb-2"></i>
+                                        <p class="small text-muted mb-0">لا توجد صورة</p>
+                                    </div>
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    <div class="fw-medium text-truncate" style="max-width: 250px;" title="{{h1}}">
+                                        {{h1}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="news-text-container" style="max-width: 250px;" title="{{p}}">
+                                        <span class="news-text-short">{{p}}</span>
+                                        <span class="news-text-ellipsis" style="display: none;">...</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-sm btn-icon btn-outline-primary edit-news" 
+                                                data-id="{{@index}}" 
+                                                data-news='{{json this}}'
+                                                data-bs-toggle="tooltip" 
+                                                data-bs-placement="top" 
+                                                title="تعديل">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-icon btn-outline-danger delete-news" 
+                                                data-id="{{@index}}"
+                                                data-bs-toggle="tooltip" 
+                                                data-bs-placement="top" 
+                                                title="حذف">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <div class="text-center">
+                                        <span class="text-muted small">
+                                            إجمالي الأخبار: <span class="fw-bold">{{news.length}}</span>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- News Table Mobile Transformation Script -->
+<script>
+// News Text Truncation Script
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize news text truncation
+    initializeNewsTextTruncation();
+    
+    // Re-initialize on window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(initializeNewsTextTruncation, 250);
+    });
+});
+
+function initializeNewsTextTruncation() {
+    const newsContainers = document.querySelectorAll('.news-text-container');
+    
+    newsContainers.forEach(function(container) {
+        const shortText = container.querySelector('.news-text-short');
+        const ellipsis = container.querySelector('.news-text-ellipsis');
+        const fullText = shortText.textContent;
+        
+        // Reset to original state
+        container.classList.remove('expanded');
+        shortText.textContent = fullText;
+        
+        // Check if text needs truncation
+        if (container.scrollHeight > container.offsetHeight) {
+            // Truncate text to fit container
+            let truncatedText = fullText;
+            const maxLength = Math.floor((container.offsetHeight / parseInt(getComputedStyle(container).lineHeight)) * 20);
+            
+            if (fullText.length > maxLength) {
+                truncatedText = fullText.substring(0, maxLength - 3);
+                shortText.textContent = truncatedText;
+                ellipsis.style.display = 'inline';
+            } else {
+                ellipsis.style.display = 'none';
+            }
+        } else {
+            ellipsis.style.display = 'none';
+        }
+        
+        // Add click event to toggle expansion
+        ellipsis.onclick = function() {
+            container.classList.toggle('expanded');
+            if (container.classList.contains('expanded')) {
+                shortText.textContent = fullText;
+                ellipsis.textContent = 'عرض أقل';
+                ellipsis.style.display = 'inline';
+            } else {
+                initializeNewsTextTruncation(); // Re-truncate
+            }
+        };
+    });
+}
+
+// Convert news table to mobile cards on page load and resize
+function convertNewsTableToMobileCards() {
+    if (window.innerWidth <= 991.98) {
+        var table = document.querySelector('.news-page .table');
+        var tableResponsive = document.querySelector('.news-page .table-responsive');
+        
+        if (table && tableResponsive && !tableResponsive.querySelector('.mobile-news-cards')) {
+            var rows = table.querySelectorAll('tbody tr');
+            var footerRow = table.querySelector('tfoot tr');
+            
+            var mobileHTML = '<div class="mobile-news-cards">';
+            
+            rows.forEach(function(row, index) {
+                var cells = row.querySelectorAll('td');
+                if (cells.length >= 5) {
+                    var newsNumber = cells[0].textContent.trim();
+                    var imageCell = cells[1];
+                    var image = imageCell.querySelector('img');
+                    var imageSrc = image ? image.src : null;
+                    var title = cells[2].querySelector('.fw-medium') ? cells[2].querySelector('.fw-medium').textContent.trim() : '';
+                    var content = cells[3].querySelector('.text-truncate-3') ? cells[3].querySelector('.text-truncate-3').textContent.trim() : '';
+                    var actions = cells[4].innerHTML;
+                    
+                    mobileHTML += 
+                        '<div class="mobile-news-card">' +
+                            '<div class="mobile-news-header">' +
+                                '<div class="mobile-news-number">' + newsNumber + '</div>' +
+                                '<div class="mobile-news-image">' +
+                                    (imageSrc ? 
+                                        '<img src="' + imageSrc + '" alt="صورة الخبر">' : 
+                                        '<div class="mobile-news-image-placeholder">' +
+                                            '<i class="far fa-image"></i>' +
+                                            '<span>لا توجد صورة</span>' +
+                                        '</div>'
+                                    ) +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="mobile-news-body">' +
+                                '<div class="mobile-news-title">' +
+                                    '<div class="mobile-news-title-label">' +
+                                        '<i class="fas fa-heading"></i> العنوان' +
+                                    '</div>' +
+                                    '<div class="mobile-news-title-text">' + title + '</div>' +
+                                '</div>' +
+                                '<div class="mobile-news-content">' +
+                                    '<div class="mobile-news-content-label">' +
+                                        '<i class="fas fa-align-right"></i> النص' +
+                                    '</div>' +
+                                    '<div class="mobile-news-content-text">' + content + '</div>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="mobile-news-actions">' +
+                                actions +
+                            '</div>' +
+                        '</div>';
+                }
+            });
+            
+            // Add summary footer
+            if (footerRow) {
+                var summaryText = footerRow.querySelector('td') ? footerRow.querySelector('td').textContent.trim() : '';
+                mobileHTML += 
+                    '<div class="mobile-news-summary">' +
+                        '<p class="mobile-news-summary-text">' + summaryText + '</p>' +
+                    '</div>';
+            }
+            
+            mobileHTML += '</div>';
+            
+            // Insert mobile cards after the table
+            table.insertAdjacentHTML('afterend', mobileHTML);
+        }
+    } else {
+        // Remove mobile cards on desktop
+        var mobileCards = document.querySelector('.news-page .mobile-news-cards');
+        if (mobileCards) {
+            mobileCards.remove();
+        }
+    }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', function() {
+    convertNewsTableToMobileCards();
+    
+    // Re-run on window resize
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(convertNewsTableToMobileCards, 250);
+    });
+});
+</script>
+
+<!-- Add/Edit News Modal -->
+<div class="modal fade" id="newsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newsModalTitle">إضافة خبر جديد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="newsForm">
+                <div class="modal-body">
+                    <input type="hidden" id="newsId" name="id">
+                    <div class="mb-3">
+                        <label for="newsImageUpload" class="form-label">
+                            <i class="fas fa-image me-2"></i>صورة الخبر
+                        </label>
+                        <input type="file" class="form-control" id="newsImageUpload" name="newsImage" accept="image/*">
+                        <input type="hidden" id="newsImg" name="img">
+                        <small class="text-muted">يُسمح برفع ملفات الصور فقط (JPEG, JPG, PNG, WebP)</small>
+                        <div id="newsImagePreview" class="mt-2"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newsH1" class="form-label">العنوان</label>
+                        <input type="text" class="form-control" id="newsH1" name="h1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newsP" class="form-label">نص الخبر</label>
+                        <textarea class="form-control" id="newsP" name="p" rows="6" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteNewsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تأكيد الحذف</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                هل أنت متأكد من حذف هذا الخبر؟
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteNews">حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+
