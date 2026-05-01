@@ -1,0 +1,6 @@
+/* Airlines management styles */
+#airlinesList img {
+    border-radius: 8px;
+    border: 1px solid #eee;
+    background: #fff;
+}

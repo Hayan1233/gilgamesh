@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <link rel="stylesheet" href="/css/airlines.css">
+    <h2 class="mb-4">إدارة شركات الطيران</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form id="addAirlineForm" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="airlineName" class="form-label">اسم شركة الطيران</label>
+                    <input type="text" class="form-control" id="airlineName" name="airlineName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="airlineLogo" class="form-label">لوغو الشركة</label>
+                    <input type="file" class="form-control" id="airlineLogo" name="airlineLogo" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn btn-primary">إضافة الشركة</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h5>شركات الطيران المضافة</h5>
+            <ul class="list-group list-group-flush" id="airlinesList">
+                <!-- سيتم تعبئة الشركات هنا عبر الجافاسكريبت -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="/js/airlines.js"></script>
